@@ -59,6 +59,9 @@ public class MyLeaderLatch {
 
     public void start() throws KeeperException, InterruptedException {
         Stat stat = client.exists(latchPath,false);
+        if(stat == null){
+            client.create(latchPath,new byte[0],ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT);
+        }
         seizeLeader();
         if(checkLeaderShip()){
             isLeader = true;
