@@ -1,0 +1,7 @@
+java应用高可用改造示例
+# 原理
+基于zookeeper临时有序节点，应用开启后抢注节点，拿到第一个节点的作为master启动，开启任务，
+其余节点的应用注册watcher监控主节点运行状态并阻塞等待，当watcher观察到主节点消失，抢注节点抢主，抢到主的切为master并继续开始任务。
+# 示例
+代码中有两个示例，一个是自己基于zookeeper包写的，比较粗糙。
+还有一个是用的netflix公司基于zookeeper的开源框架包：curator，curator对于zookeeper做了大量的封装，对于开发者很友好，推荐使用
